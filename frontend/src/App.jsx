@@ -4,14 +4,15 @@ import { AuthProvider, AuthContext } from './context/AuthContext';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
-import Editor from './pages/Editor';
-import Landing from "./pages/Landing";
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useContext(AuthContext);
 
   if (loading) return <div>Loading...</div>;
-  if (!token) return <Navigate to="/login" />;
+
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
 
   return children;
 };
@@ -21,15 +22,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-
-          {/* Public Landing Page */}
-          <Route path="/" element={<Landing />} />
-
-          {/* Auth Pages */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
-          {/* Protected Dashboard */}
           <Route
             path="/dashboard"
             element={
@@ -38,20 +32,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* Protected Editor */}
-          <Route
-            path="/editor/:id"
-            element={
-              <ProtectedRoute>
-                <Editor />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* Catch-All Redirect */}
-          <Route path="*" element={<Navigate to="/" />} />
-
+          <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
       </Router>
     </AuthProvider>
@@ -59,5 +40,3 @@ function App() {
 }
 
 export default App;
-
-

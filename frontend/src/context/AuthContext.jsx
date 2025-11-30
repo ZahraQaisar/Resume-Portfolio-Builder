@@ -5,27 +5,20 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check for token in localStorage on mount
-        const storedToken = localStorage.getItem('token');
-        if (storedToken) {
-            setToken(storedToken);
-            axios.defaults.headers.common['x-auth-token'] = storedToken;
-        }
-        setLoading(false);
-    }, []);
-
-    useEffect(() => {
-        // Update axios defaults and localStorage when token changes
         if (token) {
             axios.defaults.headers.common['x-auth-token'] = token;
             localStorage.setItem('token', token);
+            // Ideally, you'd fetch the user profile here to validate the token
+            // For now, we'll assume the token is valid if present
+            setLoading(false);
         } else {
             delete axios.defaults.headers.common['x-auth-token'];
             localStorage.removeItem('token');
+            setLoading(false);
         }
     }, [token]);
 
@@ -38,7 +31,7 @@ export const AuthProvider = ({ children }) => {
             setToken(res.data.token);
             return true;
         } catch (err) {
-            console.error('Login error:', err);
+            console.error(err);
             return false;
         }
     };
@@ -53,7 +46,7 @@ export const AuthProvider = ({ children }) => {
             setToken(res.data.token);
             return true;
         } catch (err) {
-            console.error('Registration error:', err);
+            console.error(err);
             return false;
         }
     };
@@ -69,4 +62,3 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
