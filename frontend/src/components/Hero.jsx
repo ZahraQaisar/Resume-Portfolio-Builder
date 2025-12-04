@@ -47,16 +47,6 @@ export default function Hero() {
             </button>
           </div>
 
-          <div className="flex items-center gap-3 mt-6">
-            <div className="flex items-center gap-1 text-green-500">★ ★ ★ ★ ★</div>
-            <div className="text-sm text-gray-600 dark:text-gray-300">
-              4,987 Reviews on Reviews.io
-            </div>
-          </div>
-
-          <div className="text-sm text-gray-600 dark:text-gray-300 mt-2">
-            28,452 users landed interviews last month
-          </div>
         </div>
 
         {/* RIGHT */}
