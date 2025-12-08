@@ -13,16 +13,19 @@ app.use(express.json());
 
 // Connect to MongoDB
 mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB Connected'))
-    .catch((err) => console.log(err));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => console.log(err));
+
+// Root Route
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/resumes', require('./routes/resumes'));
-app.use('/api/textSummarize', require('./routes/textSummarize'));
-app.use('/api/textProfessionalize', require('./routes/textProfessionalize'));
-app.use('/api/textImprove', require('./routes/textImprove'));
+app.use('/api/portfolio', require('./routes/portfolio'));
 
 const PORT = process.env.PORT || 5000;
 

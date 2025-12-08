@@ -14,6 +14,10 @@ const ResumeSchema = new mongoose.Schema({
         type: Object, // Flexible structure for resume data
         default: {},
     },
+    template: {
+        type: String,
+        default: 'modern',
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Resume', ResumeSchema);

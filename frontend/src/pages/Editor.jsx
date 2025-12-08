@@ -55,7 +55,8 @@ export default function Editor() {
     try {
       await updateResume(resume._id, {
         title: resume.title,
-        content: resume.content
+        content: resume.content,
+        template: resume.template
       });
       alert('Resume saved successfully!');
     } catch (err) {
@@ -72,6 +73,10 @@ export default function Editor() {
 
   const handleClosePreview = () => {
     setShowPreview(false);
+  };
+
+  const handleTemplateChange = (newTemplate) => {
+    setResume(prev => ({ ...prev, template: newTemplate }));
   };
 
   const handleBack = () => {
@@ -175,6 +180,7 @@ export default function Editor() {
         <ResumePreview
           resume={resume}
           onClose={handleClosePreview}
+          onTemplateChange={handleTemplateChange}
         />
       )}
     </div>
