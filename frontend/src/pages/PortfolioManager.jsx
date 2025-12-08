@@ -6,9 +6,12 @@ import { Link } from 'react-router-dom';
 const PortfolioManager = () => {
     const [portfolios, setPortfolios] = useState([]);
     const [resumes, setResumes] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [localLoading, setLocalLoading] = useState(true);
+    const { loading: authLoading } = useContext(AuthContext);
 
     useEffect(() => {
+        if (authLoading) return; // Wait for auth to be ready
+
         const fetchData = async () => {
             try {
                 const [resumesRes, portfoliosRes] = await Promise.all([
@@ -20,11 +23,11 @@ const PortfolioManager = () => {
             } catch (err) {
                 console.error("Error fetching data", err);
             } finally {
-                setLoading(false);
+                setLocalLoading(false);
             }
         };
         fetchData();
-    }, []);
+    }, [authLoading]);
 
     const togglePublic = async (resumeId, currentStatus, currentTheme) => {
         try {
@@ -70,7 +73,7 @@ const PortfolioManager = () => {
         }
     }
 
-    if (loading) return <div className="p-8">Loading...</div>;
+    if (authLoading || localLoading) return <div className="p-8">Loading...</div>;
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
@@ -83,7 +86,7 @@ const PortfolioManager = () => {
                 <div className="bg-white shadow rounded-lg overflow-hidden">
                     <ul className="divide-y divide-gray-200">
                         {resumes.map(resume => {
-                            const portfolio = portfolios.find(p => p.resume._id === resume._id);
+                            const portfolio = portfolios.find(p => p.resume && p.resume._id === resume._id);
                             const isPublic = portfolio ? portfolio.isPublic : false;
                             const theme = portfolio ? portfolio.theme : 'light';
 
