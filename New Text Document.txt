@@ -1,0 +1,8 @@
+# Ignore backend env file
+backend/.env
+
+# Ignore Hugging Face secret file
+huggingfacesignupinfo.txt
+
+# Ignore node_modules (optional but recommended)
+node_modules/

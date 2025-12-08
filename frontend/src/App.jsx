@@ -13,7 +13,10 @@ const ProtectedRoute = ({ children }) => {
   const { token, loading } = useContext(AuthContext);
 
   if (loading) return <div>Loading...</div>;
-  if (!token) return <Navigate to="/login" />;
+
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
 
   return children;
 };
@@ -23,15 +26,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-
-          {/* Public Landing Page */}
-          <Route path="/" element={<Landing />} />
-
-          {/* Auth Pages */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
-          {/* Protected Dashboard */}
           <Route
             path="/dashboard"
             element={
@@ -74,5 +70,3 @@ function App() {
 }
 
 export default App;
-
-
