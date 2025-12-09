@@ -1,10 +1,24 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://backend-resume-builder.vercel.app/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
+// Fallback logic: if the env var doesn't include /api, we might need to append it, 
+// but usually it's cleaner to put the full base URL in the env var or append /api here.
+// The user gave https://backend-resume-builder.vercel.app.
+// The code uses https://backend-resume-builder.vercel.app/api.
+// So I should append /api if I put the root in .env.
+// Let's assume .env has the root.
+
+const getBaseUrl = () => {
+    let url = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+    if (!url.endsWith('/api')) {
+        url += '/api';
+    }
+    return url;
+};
 
 // Create axios instance
 const api = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: getBaseUrl(),
     headers: {
         'Content-Type': 'application/json',
     },
