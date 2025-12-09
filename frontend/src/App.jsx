@@ -8,6 +8,9 @@ import Portfolio from './pages/Portfolio';
 import PortfolioManager from './pages/PortfolioManager';
 import Editor from './pages/Editor';
 import Landing from "./pages/Landing";
+import Checkout from "./pages/Checkout";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useContext(AuthContext);
@@ -63,6 +66,11 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Payment Routes */}
+          <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+          <Route path="/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
+          <Route path="/payment-cancel" element={<ProtectedRoute><PaymentCancel /></ProtectedRoute>} />
 
           {/* Catch-All Redirect */}
           <Route path="*" element={<Navigate to="/" />} />

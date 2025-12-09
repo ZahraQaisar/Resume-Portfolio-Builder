@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Pricing() {
   const plans = [
@@ -6,6 +7,12 @@ export default function Pricing() {
     { title: "Pro", price: "$9/mo", features: ["Unlimited Resumes", "Premium Templates", "AI Review"] },
     { title: "Expert", price: "$19/mo", features: ["Everything in Pro", "1:1 Resume Support"] },
   ];
+
+  const navigate = useNavigate();
+
+  const handleChoosePlan = (plan) => {
+    navigate('/checkout', { state: { planId: plan.title.toLowerCase() } });
+  };
 
   return (
     <section id="pricing" className="py-16 px-6 lg:px-16 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
@@ -24,7 +31,12 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg">Choose Plan</button>
+              <button
+                onClick={() => handleChoosePlan(p)}
+                className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg"
+              >
+                Choose Plan
+              </button>
             </div>
           ))}
         </div>
