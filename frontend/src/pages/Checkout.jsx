@@ -28,7 +28,7 @@ const Checkout = () => {
 
             const body = { planId };
 
-            const response = await axios.post('http://localhost:5000/api/payment/create-checkout-session', body, config);
+            const response = await axios.post('https://backend-resume-builder.vercel.app/api/payment/create-checkout-session', body, config);
 
             if (response.data.url) {
                 window.location.href = response.data.url;

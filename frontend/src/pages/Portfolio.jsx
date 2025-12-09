@@ -14,7 +14,7 @@ const Portfolio = () => {
             try {
                 // id here is the resumeId as per our route definition in frontend (we will configure App.jsx to pass resume ID or portfolio ID)
                 // Adjusting backend route to accept resumeID makes it easier for the manager page.
-                const res = await axios.get(`http://localhost:5000/api/portfolio/public/${id}`);
+                const res = await axios.get(`https://backend-resume-builder.vercel.app/api/portfolio/public/${id}`);
                 setData(res.data);
                 if (res.data.settings.theme === 'dark') {
                     setDarkMode(true);

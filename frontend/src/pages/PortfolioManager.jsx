@@ -15,8 +15,8 @@ const PortfolioManager = () => {
         const fetchData = async () => {
             try {
                 const [resumesRes, portfoliosRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/resumes'),
-                    axios.get('http://localhost:5000/api/portfolio'),
+                    axios.get('https://backend-resume-builder.vercel.app/api/resumes'),
+                    axios.get('https://backend-resume-builder.vercel.app/api/portfolio'),
                 ]);
                 setResumes(resumesRes.data);
                 setPortfolios(portfoliosRes.data);
@@ -31,7 +31,7 @@ const PortfolioManager = () => {
 
     const togglePublic = async (resumeId, currentStatus, currentTheme) => {
         try {
-            const res = await axios.post('http://localhost:5000/api/portfolio/config', {
+            const res = await axios.post('https://backend-resume-builder.vercel.app/api/portfolio/config', {
                 resumeId,
                 isPublic: !currentStatus,
                 theme: currentTheme || 'light',
@@ -62,7 +62,7 @@ const PortfolioManager = () => {
     const toggleTheme = async (resumeId, isPublic, currentTheme) => {
         try {
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            await axios.post('http://localhost:5000/api/portfolio/config', {
+            await axios.post('https://backend-resume-builder.vercel.app/api/portfolio/config', {
                 resumeId,
                 isPublic: isPublic,
                 theme: newTheme,
